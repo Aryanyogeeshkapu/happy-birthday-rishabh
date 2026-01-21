@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rishabh! - Our Intuition Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background: #fdf2f8; /* Soft pastel pink */
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        .playful-font {
+            font-family: 'Pacifico', cursive;
+        }
+        .section-padding {
+            padding: 100px 20px;
+        }
+        .wish-bubble {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Neon Cake Styling */
+        .neon-box {
+            border: 4px solid #f472b6;
+            box-shadow: 0 0 10px #f472b6, 0 0 20px #f472b6, inset 0 0 10px #f472b6;
+            animation: neon-pulse 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes neon-pulse {
+            from {
+                box-shadow: 0 0 5px #f472b6, 0 0 10px #f472b6, inset 0 0 5px #f472b6;
+                border-color: #f472b6;
+            }
+            to {
+                box-shadow: 0 0 20px #ff0080, 0 0 40px #ff0080, inset 0 0 20px #ff0080;
+                border-color: #ff0080;
+            }
+        }
+
+        #audio-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Audio Controls -->
+    <div id="audio-controls" class="glass-card p-3 flex items-center gap-3">
+        <button id="audio-toggle-btn" class="bg-pink-500 text-white p-2 rounded-full hover:bg-pink-600 transition shadow-lg">
+            <svg id="audio-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+        </button>
+        <span class="text-xs font-bold text-pink-600" id="audio-status">Music Off</span>
+    </div>
+
+    <!-- 1. Homepage -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+        <div class="glass-card p-10 max-w-2xl transform hover:scale-105 transition duration-500">
+            <h1 class="playful-font text-5xl md:text-7xl text-pink-600 mb-6 drop-shadow-lg">Happy Birthday Rishabh!</h1>
+            <p class="text-xl text-gray-700 leading-relaxed mb-8">
+                To my dearest friend, whose intuition brought us together and whose heart keeps us close. Let's celebrate your magical day!
+            </p>
+            <button onclick="startExperience()" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
+                Explore Our Journey
+            </button>
+        </div>
+    </section>
+
+    <!-- 2. Friendship Journey Section -->
+    <section id="journey" class="section-padding bg-white/30">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="playful-font text-4xl text-center text-purple-700 mb-16">Our Intuition Journey</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 flex flex-col items-center">
+                    <div class="w-16 h-16 bg-pink-200 rounded-full flex items-center justify-center mb-4 text-2xl">✨</div>
+                    <h3 class="font-bold text-xl mb-2">The First Class</h3>
+                    <p class="text-sm text-center text-gray-600">Where our intuition sparked a connection that would last a lifetime.</p>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center border-t-4 border-pink-400">
+                    <div class="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center mb-4 text-2xl">🎢</div>
+                    <h3 class="font-bold text-xl mb-2">The Ups & Downs</h3>
+                    <p class="text-sm text-center text-gray-600">Navigating life's challenges together, always stronger as a duo.</p>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center">
+                    <div class="w-16 h-16 bg-yellow-200 rounded-full flex items-center justify-center mb-4 text-2xl">🎂</div>
+                    <h3 class="font-bold text-xl mb-2">Today & Forever</h3>
+                    <p class="text-sm text-center text-gray-600">Celebrating another year of shared laughter and intuitive vibes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Birthday Wishes & 3D Cake -->
+    <section class="section-padding">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="playful-font text-4xl text-pink-600 mb-12">Make a Wish, Rishabh</h2>
+            
+            <div id="cake-container" class="h-80 mb-12 flex justify-center items-center relative cursor-pointer group">
+                <!-- Large Neon Interaction Box -->
+                <div id="cake-interaction-box" class="neon-box w-64 h-48 rounded-3xl flex flex-col justify-center items-center bg-white/10 backdrop-blur-sm transition-transform hover:scale-110">
+                    <div id="cake-interaction" class="text-8xl animate-bounce mb-2">🎂</div>
+                    <div class="text-pink-600 font-bold tracking-widest text-xs uppercase opacity-70">Blow Me</div>
+                </div>
+                <div id="candle-text" class="absolute -top-12 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-full shadow-lg opacity-0 transition-opacity group-hover:opacity-100 font-bold text-pink-500">Click to blow the candle!</div>
+            </div>
+
+            <div id="secret-message" class="hidden glass-card p-8 mb-12 border-2 border-dashed border-pink-400">
+                <h3 class="playful-font text-3xl text-purple-600 mb-4">Surprise for Rishabh!</h3>
+                <p class="text-lg italic">"Friends are the family we choose. Thank you for choosing me every day, Rishabh. You're a gem!"</p>
+            </div>
+
+            <div class="glass-card p-8 text-left">
+                <h4 class="font-bold mb-4">Leave a Birthday Wish</h4>
+                <div class="flex flex-col gap-4">
+                    <textarea id="wish-input" class="p-4 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white/50" rows="3" placeholder="Write something magical..."></textarea>
+                    <button onclick="addWish()" class="bg-pink-500 text-white font-bold py-3 rounded-xl hover:bg-pink-600 transition">Post Wish</button>
+                </div>
+            </div>
+
+            <div id="wishes-grid" class="mt-12 flex flex-wrap justify-center gap-4">
+                <!-- Wishes will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Gallery Section -->
+    <section class="section-padding bg-gradient-to-b from-transparent to-pink-100">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="playful-font text-4xl text-purple-700 mb-8">Our Memory Cube</h2>
+            <p class="mb-12 text-gray-600">A 3D perspective of our favorite moments. Grab and rotate the cube!</p>
+            <div id="gallery-container" class="h-[400px] w-full flex items-center justify-center overflow-hidden">
+                <!-- Three.js Cube will be here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Final Touch Message -->
+    <section class="section-padding text-center bg-white/20">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-6xl mb-6">✨🌟✨</div>
+            <h2 class="playful-font text-5xl text-pink-600 mb-6">Always Connected</h2>
+            <blockquote class="text-2xl italic text-gray-700 font-light px-8 mb-12">
+                "Intuition is what brought us to that classroom, but friendship is what kept us there. Happy Birthday, Rishabh, to the one who just knows."
+            </blockquote>
+            <div class="text-6xl">💖</div>
+        </div>
+    </section>
+
+    <footer class="p-8 text-center text-sm text-gray-400">
+        Made with love for Rishabh's special day.
+    </footer>
+
+    <script>
+        // --- 3D Scene Setup ---
+        let scene, camera, renderer, cube, objects = [];
+        let mouseX = 0, mouseY = 0;
+
+        function init3D() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            createFloatingObjects();
+            createPhotoCube();
+
+            camera.position.z = 5;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            animate();
+        }
+
+        function createFloatingObjects() {
+            const geometry = new THREE.IcosahedronGeometry(0.2, 0);
+            const colors = [0xffb7c5, 0x98fb98, 0xadd8e6, 0xffd700];
+
+            for (let i = 0; i < 50; i++) {
+                const material = new THREE.MeshPhongMaterial({ color: colors[Math.floor(Math.random() * colors.length)] });
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                mesh.position.set(
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 10
+                );
+                mesh.velocity = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01
+                );
+                scene.add(mesh);
+                objects.push(mesh);
+            }
+        }
+
+        function createPhotoCube() {
+            const materials = [
+                new THREE.MeshPhongMaterial({ color: 0xff69b4 }),
+                new THREE.MeshPhongMaterial({ color: 0xda70d6 }),
+                new THREE.MeshPhongMaterial({ color: 0x87ceeb }),
+                new THREE.MeshPhongMaterial({ color: 0xffe4e1 }),
+                new THREE.MeshPhongMaterial({ color: 0xfafad2 }),
+                new THREE.MeshPhongMaterial({ color: 0xe6e6fa })
+            ];
+
+            const geometry = new THREE.BoxGeometry(2, 2, 2);
+            cube = new THREE.Mesh(geometry, materials);
+            cube.position.set(0, -10, 0);
+            scene.add(cube);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            objects.forEach(obj => {
+                obj.position.add(obj.velocity);
+                obj.rotation.x += 0.01;
+                obj.rotation.y += 0.01;
+                if (Math.abs(obj.position.x) > 10) obj.velocity.x *= -1;
+                if (Math.abs(obj.position.y) > 10) obj.velocity.y *= -1;
+            });
+
+            const targetX = mouseX * 0.001;
+            const targetY = mouseY * 0.001;
+            camera.position.x += (targetX - camera.position.x) * 0.05;
+            camera.position.y += (targetY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            if (cube) {
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.005;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth / 2);
+            mouseY = (e.clientY - window.innerHeight / 2);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- FIXED Audio Logic ---
+        let audioCtx;
+        let isPlaying = false;
+        let nextNoteTime = 0;
+        let currentNote = 0;
+        let schedulerId;
+
+        const melody = [
+            { f: 261.63, d: 0.4 }, { f: 261.63, d: 0.2 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 329.63, d: 1.2 },
+            { f: 261.63, d: 0.4 }, { f: 261.63, d: 0.2 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 }, { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.2 },
+            { f: 261.63, d: 0.4 }, { f: 261.63, d: 0.2 }, { f: 523.25, d: 0.6 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 329.63, d: 0.6 }, { f: 293.66, d: 0.6 },
+            { f: 466.16, d: 0.4 }, { f: 466.16, d: 0.2 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.2 }
+        ];
+
+        function startExperience() {
+            scrollToSection('journey');
+            if (!isPlaying) toggleMusic(true);
+        }
+
+        function toggleMusic(forcePlay = false) {
+            if (!audioCtx) initAudioContext();
+
+            if (isPlaying && !forcePlay) {
+                audioCtx.suspend();
+                isPlaying = false;
+                updateAudioUI(false);
+            } else {
+                audioCtx.resume();
+                isPlaying = true;
+                updateAudioUI(true);
+            }
+        }
+
+        function updateAudioUI(playing) {
+            const btn = document.getElementById('audio-icon');
+            const status = document.getElementById('audio-status');
+            if (playing) {
+                btn.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />';
+                status.innerText = "Music On";
+            } else {
+                btn.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />';
+                status.innerText = "Music Off";
+            }
+        }
+
+        function initAudioContext() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            nextNoteTime = audioCtx.currentTime;
+            scheduler();
+        }
+
+        function playNote(freq, startTime, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, startTime);
+            
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.1, startTime + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        }
+
+        function scheduler() {
+            while (nextNoteTime < audioCtx.currentTime + 0.1) {
+                const note = melody[currentNote];
+                playNote(note.f, nextNoteTime, note.d);
+                nextNoteTime += note.d + 0.05;
+                currentNote = (currentNote + 1) % melody.length;
+            }
+            schedulerId = setTimeout(scheduler, 25);
+        }
+
+        document.getElementById('audio-toggle-btn').addEventListener('click', () => toggleMusic());
+
+        // Cake Interaction
+        document.getElementById('cake-interaction-box').addEventListener('click', function() {
+            if (!isPlaying) toggleMusic(true);
+            const cakeEmoji = document.getElementById('cake-interaction');
+            cakeEmoji.innerHTML = "✨🍰✨";
+            document.getElementById('secret-message').classList.remove('hidden');
+            document.getElementById('candle-text').innerText = "Make a Wish!";
+            
+            this.style.animation = 'none';
+            this.style.borderColor = '#ff0080';
+            this.style.boxShadow = '0 0 30px #ff0080';
+
+            gsap.to(this, { scale: 1.2, duration: 0.5, yoyo: true, repeat: 1 });
+        });
+
+        function addWish() {
+            const input = document.getElementById('wish-input');
+            const grid = document.getElementById('wishes-grid');
+            if (!input.value.trim()) return;
+
+            const bubble = document.createElement('div');
+            bubble.className = "wish-bubble glass-card p-4 text-sm font-bold text-pink-700 max-w-[200px] transform rotate-" + (Math.random() > 0.5 ? '2' : '-2');
+            bubble.innerText = input.value;
+            
+            grid.appendChild(bubble);
+            input.value = "";
+            
+            gsap.from(bubble, { scale: 0, opacity: 0, duration: 0.5, ease: "back.out" });
+        }
+
+        window.onload = () => {
+            init3D();
+        };
+
+    </script>
+</body>
+</html>
